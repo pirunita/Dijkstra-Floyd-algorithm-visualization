@@ -36,7 +36,7 @@ public class FloydDijkstra : MonoBehaviour {		//  - Unity를 이용한 Floyd & D
     int[,]D;                                            // Floyd Algorithm에 사용되는 최단경로의 길이가 포함된 행렬을 선언한다.
     int[,]Path;                                         // Floyd Algorithm에 사용되는 한 node에서 다른 node로 갈 때 최단비용으로 가기 위해 거쳐가는 node들의 행렬을 선언한다.
 	
-	                                                    /*---------------------------------------------------------------------------------------------------------------------*/
+	                                                /*---------------------------------------------------------------------------------------------------------------------*/
     int[]touch;                                         // Dijkstra Algorithm에 사용되는 한 node에서 다른 node로 갈 때 최단비용으로 가기 위해 거쳐가는 node들의 배열을 선언한다. 
     int[]length;                                        // Dijkstra Algorithm에 사용되는 한 node에서 다른 node로 갈 때 최단비용으로 갈 때의 weight를 저장하는 배열을 선언한다.
   
@@ -125,9 +125,9 @@ public class FloydDijkstra : MonoBehaviour {		//  - Unity를 이용한 Floyd & D
 	int count = 1; 					// while문 반복횟수
 	int vnear = 1; 					// 각 node에 대해서 가장 가까이에 있는 vnear값
 	touch = new int[num + 1]; 			// 배열은 0부터 시작하므로 (node + 1) 만큼 배열을 만들어 node 표시를 용이하게한다.
-												    		                          // touch는 어떤 node에서 가장 가까운 node를 뜻한다.
+							// touch는 어떤 node에서 가장 가까운 node를 뜻한다.
 	length = new int[num + 1];			// 마찬가지로 (node의 수 + 1) 만큼 배열을 만든다. 
-												    		                          //length는 startPoint에서 다른 node로 가는 거리가 된다.
+							//length는 startPoint에서 다른 node로 가는 거리가 된다.
 	for (int i = 1; i <= num; i++) {
 	    touch [i] = startP;				// startPoint에서 가장 가까운 node를 일단 startPoint로 초기화 한다.
 	    length [i] = weightMatrix [startP - 1, i - 1];  // weightMatrix는 0부터 시작하고 startPoint와 잇는 edge들의 weight 초기값을 length에 대입한다.
@@ -143,8 +143,8 @@ public class FloydDijkstra : MonoBehaviour {		//  - Unity를 이용한 Floyd & D
 	    }
 	    for (int i = 1; i <= num; i++) {
 	        if (length [vnear] + weightMatrix [vnear - 1, i - 1] < length [i]) { // startPoint에서 다른 node Vi로 갈 때 
-																			         // 가장 weight가 적은 node를 거쳐가는 것이 더 이득인지 검사.
-		    length [i] = length [vnear] + weightMatrix [vnear - 1, i - 1];// 그럴 경우 length를 갱신시킴으로써 더 짧은경로를 대입한다.
+										     // 가장 weight가 적은 node를 거쳐가는 것이 더 이득인지 검사.
+		    length [i] = length [vnear] + weightMatrix [vnear - 1, i - 1];   // 그럴 경우 length를 갱신시킴으로써 더 짧은경로를 대입한다.
 		    touch[i] = vnear; // startPoint에서 Vi로 갈 때 Vnear을 거치는 것이 더 빠르므로 갱신한다.
 	      }
  	    }
@@ -264,12 +264,12 @@ public class FloydDijkstra : MonoBehaviour {		//  - Unity를 이용한 Floyd & D
 	    endPointText.text = "v" + (endPoint + 1);
 	}
     }
-    public void floydstartBtn(){                    // floyd Button을 선택할 경우 1프레임마다 실행되는 update()에서 floyd를 동작한다.
+    public void floydstartBtn(){                // floyd Button을 선택할 경우 1프레임마다 실행되는 update()에서 floyd를 동작한다.
 	if (startPoint != endPoint) {	        // 출발점과 도착점은 같지 않을 때 실행된다
 	    floydWork = true;
 	}
     }
-    public void dijkstrastartBtn(){                 // dijkstra Button을 선택할 경우 update()에서 dijkstra를 동작한다.
+    public void dijkstrastartBtn(){             // dijkstra Button을 선택할 경우 update()에서 dijkstra를 동작한다.
 	if (startPoint != endPoint) {           // 출발점과 도착점은 같지 않을 때 실행된다
 	    dijkstraWork = true;
 	}
