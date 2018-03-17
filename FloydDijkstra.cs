@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-						//    경희대학교 정보전자신소재공학과 고성필
-public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Dijkstra Algorithm 구현 -
+							//    경희대학교 정보전자신소재공학과 고성필
+public class FloydDijkstra : MonoBehaviour {		//  - Unity를 이용한 Floyd & Dijkstra Algorithm 구현 -
     public Text startPointText;                         // 출발점을 표시하는 Text
-    public Text endPointText;	                    // 최종 도착점을 표시하는 Text
+    public Text endPointText;	                        // 최종 도착점을 표시하는 Text
 
     public Text selectNode1Text;                        // 가중치를 정하고싶은 edge의 출발 node
     public Text selectNode2Text;                        // 가중치를 정하고싶은 edge의 도착 node
@@ -42,26 +42,26 @@ public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Di
   
 	// Use this for initialization
     void Start () {
-        weightMatrix = new int[node + 1, node + 1]; // node의 수 크기에 해당하는 가중치 행렬 생성한다. 배열의 용이성을 위해 기존 수보다 1 작으므로 이 때는 1을 더한다.
-							    // 이 때는 node가 0부터 시작하므로 1을 더한다.
+        weightMatrix = new int[node + 1, node + 1]; 	// node의 수 크기에 해당하는 가중치 행렬 생성한다. 배열의 용이성을 위해 기존 수보다 1 작으므로 이 때는 1을 더한다.
+							// 이 때는 node가 0부터 시작하므로 1을 더한다.
         for (int i = 0; i <= node; i++)
             for (int j = 0; j <= node; j++)
-                weightMatrix[i, j] = 999;   // 처음 weight의 행렬의 각 요소를 모두 999로 잡는다.(무한대로표현)
-      	for (int i = 0; i <= node; i++)// 같은 node로 향하는 가중치는 0으로 둔다.
+                weightMatrix[i, j] = 999;   		// 처음 weight의 행렬의 각 요소를 모두 999로 잡는다.(무한대로표현)
+      	for (int i = 0; i <= node; i++)			// 같은 node로 향하는 가중치는 0으로 둔다.
             weightMatrix[i, i] = 0;
     }
 	
     // Update is called once per frame
     void Update () {
-        if (floydWork) {                           		 // Floyd Algorithm 버튼을 누른 경우
+        if (floydWork) {                           			 // Floyd Algorithm 버튼을 누른 경우
        	    floydAlgorithm();                                		 // Floyd Algorithm 함수 실행
        	    outputPath(startPoint+1, endPoint+1);                  	 // Floyd 최단경로를 출력하는 함수 실행
-	    floydWork = false;                                      // 종료
+	    floydWork = false;                                     	 // 종료
 	}
 	if (dijkstraWork) {                                        	 // Dijkstra Algorithm 버튼을 누른 경우
-	    dijkstraAlgorithm (startPoint + 1, node + 1);            // Dijkstra Algorithm 함수 실행
-	    outputTouch (startPoint + 1, endPoint + 1);              // Dijkstra 최단경로를 출력하는 함수 실행
-	    dijkstraWork = false;                                    // 종료
+	    dijkstraAlgorithm (startPoint + 1, node + 1);           	 // Dijkstra Algorithm 함수 실행
+	    outputTouch (startPoint + 1, endPoint + 1);             	 // Dijkstra 최단경로를 출력하는 함수 실행
+	    dijkstraWork = false;                                   	 // 종료
 	}
     }
 
@@ -79,12 +79,12 @@ public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Di
     }
 
     void outputPath(int startP, int endP){
-	if (Path [startP, endP] == 0) {                             // Path가 0을 가리키고 있는 것은 거쳐서 가는 경로가 없다는 뜻이므로 그 때의 edge를 출력한다.
+	if (Path [startP, endP] == 0) {           // Path가 0을 가리키고 있는 것은 거쳐서 가는 경로가 없다는 뜻이므로 그 때의 edge를 출력한다.
 	    changeEdgeColor (startP,endP);
-	    Debug.Log ("v" + (endP));                           // 경로가 잘 표시되는 지
+	    Debug.Log ("v" + (endP));                // 경로가 잘 표시되는 지
 	} else {
-            outputPath (startP, Path [startP, endP]);               // Path가 0을 가리키고 있지 않다면 거쳐서 가는 경로가 존재하므로 output함수를 재귀적으로 호출하며
-            outputPath(Path[startP, endP],endP);                    // 출발점과 도착점 사이에 있는 요소를 중심으로 두 부분으로 나누어 재귀호출을 진행한다.
+            outputPath (startP, Path [startP, endP]);// Path가 0을 가리키고 있지 않다면 거쳐서 가는 경로가 존재하므로 output함수를 재귀적으로 호출하며
+            outputPath(Path[startP, endP],endP);     // 출발점과 도착점 사이에 있는 요소를 중심으로 두 부분으로 나누어 재귀호출을 진행한다.
         }
     }
     void outputTouch(int startP, int endP){	
@@ -92,17 +92,17 @@ public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Di
 	    outputTouch (endP,touch [endP]); // touch가 0을 가리키고 있지 않다면 거쳐서 가는 경로가 존재하므로 output함수를 재귀적으로 호출한다.
 	    changeEdgeColor (touch[endP],endP); // endPoint에서 거꾸로 경로를 추적하므로 최단경로를 출력할 때는 변수를 반대로 넣어 불러온다.
 	    Debug.Log ("v" + endP);
-	} else {                       		      // 최단경로 추적이 끝나면 마지막 endP는 출발점 바로 다음에 오는 node가 된다. 따라서
+	} else {                       		  // 최단경로 추적이 끝나면 마지막 endP는 출발점 바로 다음에 오는 node가 된다. 따라서
 	    changeEdgeColor (startPoint + 1,endP);// 출발점과 그 다음 나오는 node를 연결하는 edge 출력.
 	    Debug.Log ("v" + endP);	
 	}
     }
 
     void floydAlgorithm(){
-	Path = new int[node + 2, node + 2];                  // 최단경로로 가는 node를 갖는 행렬이며 Path의 각 요소는 node가 갖고 있는 숫자와 관련되어 있다.
-                                                                     // 하지만 Path에서 표현하려는 node를 0부터 시작하면 최단경로를 만들지 않는 node간의 edge도 0으로 표현할 것이기 때문에
-                                                                     // 둘이 겹칠 가능성이 있으므로 Path는 정확하게 node수를 가리키기 위해 실제 node수 보다 하나 더 크게 만든다.
-                                                                     // 그러나 전역 변수에서 지정한 node는 배열의 용이성을 위해 실제 node수 보다 1 작으므로 여기서는 + 2로 표현한다.
+	Path = new int[node + 2, node + 2];  // 최단경로로 가는 node를 갖는 행렬이며 Path의 각 요소는 node가 갖고 있는 숫자와 관련되어 있다.
+                                             // 하지만 Path에서 표현하려는 node를 0부터 시작하면 최단경로를 만들지 않는 node간의 edge도 0으로 표현할 것이기 때문에
+                                             // 둘이 겹칠 가능성이 있으므로 Path는 정확하게 node수를 가리키기 위해 실제 node수 보다 하나 더 크게 만든다.
+                                             // 그러나 전역 변수에서 지정한 node는 배열의 용이성을 위해 실제 node수 보다 1 작으므로 여기서는 + 2로 표현한다.
 	D = new int[node + 1, node + 1];
 	for (int i = 0; i <= node + 1; i++)
 	    for (int j = 0; j <= node + 1; j++)
@@ -110,23 +110,23 @@ public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Di
 		
 		
 		
-	D = weightMatrix;                                           // D는 Floyd Algorithm에 사용되는 최단경로의 길이가 포함된 행렬이 되므로 가중치 행렬을 먼저 대입한다.
+	D = weightMatrix;                // D는 Floyd Algorithm에 사용되는 최단경로의 길이가 포함된 행렬이 되므로 가중치 행렬을 먼저 대입한다.
        	for (int k = 0; k <= node; k++)
 	    for (int i = 0; i <= node; i++)
 	        for (int j = 0; j <= node; j++) {
-		    if (D [i, k] + D [k, j] < D [i, j]) {       // node vi, vk, vj가 있을 때 vi에서 vj로 바로 가는 것이 빠른지 중간에 vk를 거쳐서 가는 것이 빠른지 비교한다.
-                        Path[i + 1, j + 1] = k + 1;                 // 만약 vk를 거쳐서 가는것이 가중치가 더 적을경우 그 때의 k를 Path[i,j]에 포함시킨다. 처음에 Path는 실제 node의 수로
-		        D [i, j] = D [i, k] + D [k, j];     // 이루어진 행렬이기 때문에 path[i + 1, j + 1] = k + 1; 로 표현하는 것이다. 또한 최단거리를 나타내는 D도 k를 거쳐가는 갱신시킨다.
-		    }                                           // 이 과정을 node의 수 만큼 반복하면 Path에는 최단경로로 가는 node를 갖는 요소들로 이루어진 행렬이 된다.
+		    if (D [i, k] + D [k, j] < D [i, j]) { // node vi, vk, vj가 있을 때 vi에서 vj로 바로 가는 것이 빠른지 중간에 vk를 거쳐서 가는 것이 빠른지 비교한다.
+                        Path[i + 1, j + 1] = k + 1;       // 만약 vk를 거쳐서 가는것이 가중치가 더 적을경우 그 때의 k를 Path[i,j]에 포함시킨다. 처음에 Path는 실제 node의 수로
+		        D [i, j] = D [i, k] + D [k, j];   // 이루어진 행렬이기 때문에 path[i + 1, j + 1] = k + 1; 로 표현하는 것이다. 또한 최단거리를 나타내는 D도 k를 거쳐가는 갱신시킨다.
+		    }                                     // 이 과정을 node의 수 만큼 반복하면 Path에는 최단경로로 가는 node를 갖는 요소들로 이루어진 행렬이 된다.
 	        }
 					
     }
     void dijkstraAlgorithm(int startP, int num){
-	int count = 1; 						// while문 반복횟수
-	int vnear = 1; 						// 각 node에 대해서 가장 가까이에 있는 vnear값
-	touch = new int[num + 1]; 				// 배열은 0부터 시작하므로 (node + 1) 만큼 배열을 만들어 node 표시를 용이하게한다.
+	int count = 1; 					// while문 반복횟수
+	int vnear = 1; 					// 각 node에 대해서 가장 가까이에 있는 vnear값
+	touch = new int[num + 1]; 			// 배열은 0부터 시작하므로 (node + 1) 만큼 배열을 만들어 node 표시를 용이하게한다.
 												    		                          // touch는 어떤 node에서 가장 가까운 node를 뜻한다.
-	length = new int[num + 1];				// 마찬가지로 (node의 수 + 1) 만큼 배열을 만든다. 
+	length = new int[num + 1];			// 마찬가지로 (node의 수 + 1) 만큼 배열을 만든다. 
 												    		                          //length는 startPoint에서 다른 node로 가는 거리가 된다.
 	for (int i = 1; i <= num; i++) {
 	    touch [i] = startP;				// startPoint에서 가장 가까운 node를 일단 startPoint로 초기화 한다.
@@ -135,20 +135,20 @@ public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Di
 	length [startP] = 0;                                    // startPoint는 weight의 최소값에서 제외시키기 위해 -1를 대입한다.
 	while (node >= count) { 				// while문을 (node의 수 -1) 만큼 반복
 	    int min = 999; 					// 먼저 infinite로 갱신
-	    for(int i = 1; i <= num; i++){                  // for문을 (node의 수 -1) 만큼 반복
-	        if (length [i] >= 1 && length [i] < min) {    // startPoint에서 그 다음 node로 가는 weight의 최소를 검사한다.
-		    min = length [i];                     // weight의 최소를 갱신
-		    vnear = i;                            // 그 때의 node Vi를 vnear에 저장한다.
+	    for(int i = 1; i <= num; i++){                      // for문을 (node의 수 -1) 만큼 반복
+	        if (length [i] >= 1 && length [i] < min) {      // startPoint에서 그 다음 node로 가는 weight의 최소를 검사한다.
+		    min = length [i];                           // weight의 최소를 갱신
+		    vnear = i;                                  // 그 때의 node Vi를 vnear에 저장한다.
 	        }
 	    }
 	    for (int i = 1; i <= num; i++) {
 	        if (length [vnear] + weightMatrix [vnear - 1, i - 1] < length [i]) { // startPoint에서 다른 node Vi로 갈 때 
 																			         // 가장 weight가 적은 node를 거쳐가는 것이 더 이득인지 검사.
 		    length [i] = length [vnear] + weightMatrix [vnear - 1, i - 1];// 그럴 경우 length를 갱신시킴으로써 더 짧은경로를 대입한다.
-		    touch[i] = vnear; 										         // startPoint에서 Vi로 갈 때 Vnear을 거치는 것이 더 빠르므로 갱신한다.
+		    touch[i] = vnear; // startPoint에서 Vi로 갈 때 Vnear을 거치는 것이 더 빠르므로 갱신한다.
 	      }
  	    }
-	    length [vnear] = 0;                                                     // startPoint에서 가장 가까운 Vnear로 갈 때 최소의 weight를 검사하는 과정에서 제외시키기 위함.
+	    length [vnear] = 0;       // startPoint에서 가장 가까운 Vnear로 갈 때 최소의 weight를 검사하는 과정에서 제외시키기 위함.
 	    count++;
 	 }
 	 for (int i = 1; i <= node + 1; i++) {
@@ -203,9 +203,9 @@ public class FloydDijkstra : MonoBehaviour {	//  - Unity를 이용한 Floyd & Di
 	    weightText.text = "" + (weight);
 	}
     }
-    public void addWeightBtn(){ 					// 노드 간 edge의 가중치를 추가하는 버튼을 클릭했을 때
+    public void addWeightBtn(){ 				// 노드 간 edge의 가중치를 추가하는 버튼을 클릭했을 때
 	if(selectNode1 != selectNode2){				// 가중치를 부여하고싶은 두 노드가 같지 않다면
-	    weightMatrix[selectNode1,selectNode2] = weight; // edge에 지정된 가중치를 부여한다.
+	    weightMatrix[selectNode1,selectNode2] = weight; 	// edge에 지정된 가중치를 부여한다.
 	    if (selectNode1 == 0){
 		edgeImage0 [selectNode2].gameObject.SetActive (true);
 		edgeWeightText = edgeImage0 [selectNode2].GetComponentInChildren<Text> ();
